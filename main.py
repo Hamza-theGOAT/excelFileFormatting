@@ -1,6 +1,7 @@
 from openpyxl.utils import get_column_letter as getColLetters
 from openpyxl.styles import Alignment
 from openpyxl.worksheet.table import Table
+from openpyxl import load_workbook
 
 # Validate range params and pick max if not given
 
@@ -18,7 +19,7 @@ def getRange(ws, r0, r1, c0, c1):
 
 def AltA(ws):
     r1 = ws.max_row
-    c1 = ws.max_col
+    c1 = ws.max_column
 
     return f"A1:{getColLetters(c1)}{r1}"
 
@@ -52,3 +53,16 @@ def tableFormatting(wb):
         wsData = AltA(ws)
         ws.add_table(Table(displayName=f'{sh}', ref=wsData))
         ws = AltHOI(ws)
+
+
+# Loading workbook to apply basic formats
+def formatWB(wbNin, wbNout):
+    wb = load_workbook(wbNin)
+    tableFormatting(wb)
+    wb.save(wbNout)
+
+
+if __name__ == '__main__':
+    wbNin = 'fileInput.xlsx'
+    wbNout = 'fileOutput.xlsx'
+    formatWB(wbNin, wbNout)
