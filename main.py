@@ -61,8 +61,11 @@ def tableFormatWS(ws):
     ws = AltHOI(ws)
 
 
-def formatWS(wb):
-    for sh in wb.sheetnames:
+def formatWS(wb, shz=[]):
+    if shz is None:
+        shz = wb.sheetnames
+
+    for sh in shz:
         ws = wb[sh]
         tableFormatWS(ws)
 
@@ -70,11 +73,21 @@ def formatWS(wb):
 def formatWB(wbNin, wbNout):
     wb = load_workbook(wbNin)
 
-    # Format all sheets in wb with sheetname loop
-    tableFormatWB(wb)
+    # Variable to control formatting function choice
+    ty = 'wb'
 
-    # Format all sheets in wb with additional control
-    formatWS(wb)
+    if ty == 'wb':
+        # Format all sheets in wb with sheetname loop
+        tableFormatWB(wb)
+
+    if ty == 'ws':
+        # Format all sheets in wb with additional control
+        formatWS(wb)
+
+    if ty == 'wsL':
+        # Format all sheets in list of sheets
+        shz = ['Sheet1', 'Sheet3']
+        formatWS(wb, shz)
 
     wb.save(wbNout)
 
