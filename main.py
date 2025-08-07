@@ -47,7 +47,18 @@ def AltHK(ws, rg=None):
             min_row=rg['r0'], max_row=rg['r1'],
             min_col=rg['c0'], max_col=rg['c1']):
         for cell in col:
-            cell.number_format = '#,##0;(#,##0);0'
+            cell.number_format = '#,##0.00;(#,##0.00);-'
+
+
+def AltHN_Cus(ws, temp, rg=None):
+    # if list of range (rg) is missing, use max ranges
+    rg = getRange(ws)
+
+    for col in ws.iter_cols(
+            min_row=rg['r0'], max_row=rg['r1'],
+            min_col=rg['c0'], max_col=rg['c1']):
+        for cell in col:
+            cell.number_format = f'{temp}'
 
 
 def AltHNS(ws, rg=None):
@@ -62,6 +73,20 @@ def AltHNS(ws, rg=None):
             if cell.is_date:
                 # Apply date format MM/DD/YYYY
                 cell.number_format = 'mm/dd/yyyy'
+
+
+def AltHNS_Cus(ws, temp, rg=None):
+    # if list of range (rg) is missing, use max ranges
+    rg = getRange(ws)
+
+    for col in ws.iter_cols(
+            min_row=rg['r0'], max_row=rg['r1'],
+            min_col=rg['c0'], max_col=rg['c1']):
+        for cell in col:
+            # Check for cell value being a date or datetime
+            if cell.is_date:
+                # Apply date format MM/DD/YYYY
+                cell.number_format = f'{temp}'
 
 
 def tableFormatWB(wb):
