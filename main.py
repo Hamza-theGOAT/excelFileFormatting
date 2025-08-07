@@ -14,16 +14,12 @@ def getRange(ws, r0, r1, c0, c1):
 
     return r0, r1, c0, c1
 
-# Selecting range (replicating Alt+A in excel)
-
 
 def AltA(ws):
     r1 = ws.max_row
     c1 = ws.max_column
 
     return f"A1:{getColLetters(c1)}{r1}"
-
-# Setting column width to max data length within the col (replicating Alt+HOI in excel)
 
 
 def AltHOI(ws):
@@ -41,8 +37,7 @@ def AltHOI(ws):
         ws.column_dimensions[col].width = width + 3
 
 
-# Standard formatted table (for all sheets)
-def tableFormatting(wb):
+def tableFormatWB(wb):
     for sh in wb.sheetnames:
         ws = wb[sh]
         ws.freeze_panes = 'A2'
@@ -55,10 +50,32 @@ def tableFormatting(wb):
         ws = AltHOI(ws)
 
 
-# Loading workbook to apply basic formats
+def tableFormatWS(ws):
+    ws.freeze_panes = 'A2'
+    for col in ws.iter_cols(max_row=1, max_col=ws.max_column):
+        for cell in col:
+            cell.alignment = Alignment(horizontal='left')
+    ws.sheet_view.showGridLines = False
+    wsData = AltA(ws)
+    ws.add_table(Table(displayName=f'{ws.title}', ref=wsData))
+    ws = AltHOI(ws)
+
+
+def formatWS(wb):
+    for sh in wb.sheetnames:
+        ws = wb[sh]
+        tableFormatWS(ws)
+
+
 def formatWB(wbNin, wbNout):
     wb = load_workbook(wbNin)
-    tableFormatting(wb)
+
+    # Format all sheets in wb with sheetname loop
+    tableFormatWB(wb)
+
+    # Format all sheets in wb with additional control
+    formatWS(wb)
+
     wb.save(wbNout)
 
 
