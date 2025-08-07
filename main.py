@@ -51,6 +51,21 @@ def AltHK(ws, rg=None):
             cell.number_format = '#,##0;(#,##0);0'
 
 
+def AltHNS(ws, rg=None):
+    # if list of range (rg) is missing, use max ranges
+    if rg is None:
+        rg = getRange(ws)
+
+    for col in ws.iter_cols(
+            min_row=rg['r0'], max_row=rg['r1'],
+            min_col=rg['c0'], max_col=rg['c1']):
+        for cell in col:
+            # Check for cell value being a date or datetime
+            if cell.is_date:
+                # Apply date format MM/DD/YYYY
+                cell.number_format = 'mm/dd/yyyy'
+
+
 def tableFormatWB(wb):
     for sh in wb.sheetnames:
         ws = wb[sh]
@@ -90,12 +105,17 @@ def formatWB(wbNin, wbNout=None, ty=None, shz=None):
     wb = load_workbook(wbNin)
 
     # Format all sheets in wb with sheetname loop
-    if ty == 'wb':
+    if ty is None:
         tableFormatWB(wb)
 
     # Format all sheets in wb with additional control
     if ty == 'ws':
         formatWS(wb, shz)
+
+    # Specific column based formatting
+    if ty == 'sp':
+        AltHK(wb['common'], {'r0': 2, 'r1': 4, 'c0': 3, 'c1': 3})
+        AltHNS(wb['added'], {'r0': 2, 'r1': 3, 'c0': 2, 'c1': 2})
 
     # To replace the formatted wb with original
     if wbNout is None:
@@ -109,12 +129,13 @@ def main():
     wbNout = 'fileOutput.xlsx'
 
     # Variable to control formatting function choice
-    ty = 'wb'
+    ty = 'ws'
 
     # Creating the list of desired sheets
-    shz = ['Sheet1', 'Sheet3']
+    shz = ['added', 'common']
 
     # Formate sheets accordingly
+    formatWB(wbNin, wbNout)
     formatWB(wbNin, wbNout, ty, shz)
 
 
