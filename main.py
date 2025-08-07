@@ -6,11 +6,11 @@ from openpyxl import load_workbook
 # Validate range params and pick max if not given
 
 
-def getRange(ws, r0=None, r1=None, c0=None, c1=None):
-    r0 = r0 if r0 is not None else ws.min_row
-    r1 = r1 if r1 is not None else ws.max_row
-    c0 = c0 if c0 is not None else ws.min_col
-    c1 = c1 if c1 is not None else ws.max_col
+def getRange(ws, rg=None):
+    r0 = rg.get('r0') if rg.get('r0') is not None else ws.min_row
+    r1 = rg.get('r1') if rg.get('r1') is not None else ws.max_row
+    c0 = rg.get('c0') if rg.get('c0') is not None else ws.min_col
+    c1 = rg.get('c1') if rg.get('c1') is not None else ws.max_col
 
     return {
         'r0': r0, 'r1': r1, 'c0': c0, 'c1': c1
@@ -41,8 +41,7 @@ def AltHOI(ws):
 
 def AltHK(ws, rg=None):
     # if list of range (rg) is missing, use max ranges
-    if rg is None:
-        rg = getRange(ws)
+    rg = getRange(ws)
 
     for col in ws.iter_cols(
             min_row=rg['r0'], max_row=rg['r1'],
@@ -53,8 +52,7 @@ def AltHK(ws, rg=None):
 
 def AltHNS(ws, rg=None):
     # if list of range (rg) is missing, use max ranges
-    if rg is None:
-        rg = getRange(ws)
+    rg = getRange(ws)
 
     for col in ws.iter_cols(
             min_row=rg['r0'], max_row=rg['r1'],
