@@ -73,6 +73,17 @@ def AltHOI(ws):
 
 
 def AltHK(ws, rg=None):
+    """
+    Apply numeric formatting with thousands separators and parentheses for negatives.
+
+    Args:
+        ws (Worksheet): The openpyxl worksheet object.
+        rg (dict, optional): Range dictionary with keys 'r0', 'r1', 'c0', 'c1'.
+            If not provided, the full worksheet is used.
+
+    Format Applied:
+        "#,##0.00;(#,##0.00);-"
+    """
     # if list of range (rg) is missing, use max ranges
     rg = getRange(ws)
 
@@ -84,6 +95,15 @@ def AltHK(ws, rg=None):
 
 
 def AltHN_Cus(ws, temp, rg=None):
+    """
+    Apply a custom numeric format to a worksheet range.
+
+    Args:
+        ws (Worksheet): The openpyxl worksheet object.
+        temp (str): Excel number format string (e.g. "#,##0.00").
+        rg (dict, optional): Range dictionary with keys 'r0', 'r1', 'c0', 'c1'.
+            If not provided, the full worksheet is used.
+    """
     # if list of range (rg) is missing, use max ranges
     rg = getRange(ws)
 
@@ -95,6 +115,14 @@ def AltHN_Cus(ws, temp, rg=None):
 
 
 def AltHNS(ws, rg=None):
+    """
+    Apply a standard date format ("MM/DD/YYYY") to all date/datetime cells.
+
+    Args:
+        ws (Worksheet): The openpyxl worksheet object.
+        rg (dict, optional): Range dictionary with keys 'r0', 'r1', 'c0', 'c1'.
+            If not provided, the full worksheet is used.
+    """
     # if list of range (rg) is missing, use max ranges
     rg = getRange(ws)
 
@@ -109,6 +137,15 @@ def AltHNS(ws, rg=None):
 
 
 def AltHNS_Cus(ws, temp, rg=None):
+    """
+    Apply a custom date format to all date/datetime cells in a range.
+
+    Args:
+        ws (Worksheet): The openpyxl worksheet object.
+        temp (str): Excel date format string (e.g. "DD-MMM-YYYY").
+        rg (dict, optional): Range dictionary with keys 'r0', 'r1', 'c0', 'c1'.
+            If not provided, the full worksheet is used.
+    """
     # if list of range (rg) is missing, use max ranges
     rg = getRange(ws)
 
