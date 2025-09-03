@@ -160,6 +160,19 @@ def AltHNS_Cus(ws, temp, rg=None):
 
 
 def tableFormatWB(wb):
+    """
+    Apply table formatting to all worksheets in a workbook.
+
+    Actions Performed:
+        - Freeze first row (A2).
+        - Left-align header row.
+        - Hide gridlines.
+        - Convert full sheet data into a table object.
+        - Auto-adjust column widths.
+
+    Args:
+        wb (Workbook): The openpyxl workbook object.
+    """
     for sh in wb.sheetnames:
         ws = wb[sh]
         ws.freeze_panes = 'A2'
@@ -173,6 +186,19 @@ def tableFormatWB(wb):
 
 
 def tableFormatWS(ws):
+    """
+    Apply table formatting to a single worksheet.
+
+    Actions Performed:
+        - Freeze first row (A2).
+        - Left-align header row.
+        - Hide gridlines.
+        - Convert full sheet data into a table object.
+        - Auto-adjust column widths.
+
+    Args:
+        ws (Worksheet): The openpyxl worksheet object.
+    """
     ws.freeze_panes = 'A2'
     for col in ws.iter_cols(max_row=1, max_col=ws.max_column):
         for cell in col:
