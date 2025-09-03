@@ -3,10 +3,24 @@ from openpyxl.styles import Alignment
 from openpyxl.worksheet.table import Table
 from openpyxl import load_workbook
 
-# Validate range params and pick max if not given
-
 
 def getRange(ws, rg=None):
+    """
+    Get the usable row and column range of a worksheet.
+
+    Args:
+        ws (Worksheet): The openpyxl worksheet object.
+        rg (dict, optional): A dictionary with keys 'r0', 'r1', 'c0', 'c1'.
+            - 'r0': Minimum row
+            - 'r1': Maximum row
+            - 'c0': Minimum column
+            - 'c1': Maximum column
+            If any value is None or missing, the worksheet's min/max values are used.
+
+    Returns:
+        dict: A dictionary with normalized values for the range:
+              { 'r0': int, 'r1': int, 'c0': int, 'c1': int }
+    """
     r0 = rg.get('r0') if rg.get('r0') is not None else ws.min_row
     r1 = rg.get('r1') if rg.get('r1') is not None else ws.max_row
     c0 = rg.get('c0') if rg.get('c0') is not None else ws.min_col
@@ -18,6 +32,15 @@ def getRange(ws, rg=None):
 
 
 def AltA(ws):
+    """
+    Get the full data range of a worksheet as an Excel reference string.
+
+    Args:
+        ws (Worksheet): The openpyxl worksheet object.
+
+    Returns:
+        str: Excel-style range reference (e.g., "A1:D20")
+    """
     r1 = ws.max_row
     c1 = ws.max_column
 
@@ -25,6 +48,16 @@ def AltA(ws):
 
 
 def AltHOI(ws):
+    """
+    Auto-adjust column widths based on cell contents.
+
+    Args:
+        ws (Worksheet): The openpyxl worksheet object.
+
+    Notes:
+        - Width is based on the longest string length in each column.
+        - Adds +3 padding to avoid truncated values.
+    """
     colWidths = {}
     for row in ws.iter_rows():
         for cell in row:
