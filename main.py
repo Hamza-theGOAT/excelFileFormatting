@@ -214,6 +214,14 @@ def tableFormatWS(ws):
 
 
 def formatWS(wb, shz=None):
+    """
+    Apply table formatting to specific sheets in a workbook.
+
+    Args:
+        wb (Workbook): The openpyxl workbook object.
+        shz (list[str], optional): List of worksheet names to format.
+            If None, applies to all sheets.
+    """
     # if list of sheets not provided, pick all sheets in wb
     if shz is None:
         shz = wb.sheetnames
@@ -225,6 +233,23 @@ def formatWS(wb, shz=None):
 
 
 def formatWB(wbNin, wbNout=None, ty=None, shz=None):
+    """
+    High-level workbook formatting controller.
+
+    Args:
+        wbNin (str): Input workbook filename.
+        wbNout (str, optional): Output workbook filename.
+            If None, overwrites the input workbook.
+        ty (str, optional): Type of formatting:
+            - None: Apply full table formatting to all sheets.
+            - 'ws': Apply table formatting to specific sheets.
+            - 'sp': Apply specific numeric/date formatting to hardcoded sheets.
+        shz (list[str], optional): List of sheet names (used only if ty='ws').
+
+    Notes:
+        - Uses load_workbook to open the Excel file.
+        - Saves formatted workbook to wbNout.
+    """
     wb = load_workbook(wbNin)
 
     # Format all sheets in wb with sheetname loop
