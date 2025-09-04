@@ -21,10 +21,14 @@ def getRange(ws, rg=None):
         dict: A dictionary with normalized values for the range:
               { 'r0': int, 'r1': int, 'c0': int, 'c1': int }
     """
-    r0 = rg.get('r0') if rg.get('r0') is not None else ws.min_row
-    r1 = rg.get('r1') if rg.get('r1') is not None else ws.max_row
-    c0 = rg.get('c0') if rg.get('c0') is not None else ws.min_col
-    c1 = rg.get('c1') if rg.get('c1') is not None else ws.max_col
+    r0 = rg.get('r0') if rg.get(
+        'r0') is not None and rg is not None else ws.min_row
+    r1 = rg.get('r1') if rg.get(
+        'r1') is not None and rg is not None else ws.max_row
+    c0 = rg.get('c0') if rg.get(
+        'c0') is not None and rg is not None else ws.min_col
+    c1 = rg.get('c1') if rg.get(
+        'c1') is not None and rg is not None else ws.max_col
 
     return {
         'r0': r0, 'r1': r1, 'c0': c0, 'c1': c1
