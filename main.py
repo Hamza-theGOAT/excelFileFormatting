@@ -273,18 +273,23 @@ def formatWB(wbNin, wbNout=None, ty=None, shz=None):
 
 
 def main():
+    """
+    Example entry point for workbook formatting.
+
+    - Loads an input workbook ("fileInput.xlsx").
+    - Applies default formatting to all sheets, saving as "fileOutput.xlsx".
+    - Applies controlled formatting to specific sheets ('added', 'common').
+    """
     wbNin = 'fileInput.xlsx'
     wbNout = 'fileOutput.xlsx'
-
-    # Variable to control formatting function choice
-    ty = 'ws'
 
     # Creating the list of desired sheets
     shz = ['added', 'common']
 
     # Formate sheets accordingly
     formatWB(wbNin, wbNout)
-    formatWB(wbNin, wbNout, ty, shz)
+    formatWB(wbNin, wbNout, 'ws', shz)
+    formatWB(wbNin, wbNout, 'sp')
 
 
 if __name__ == '__main__':
